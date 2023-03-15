@@ -11,8 +11,8 @@ namespace LZ
 	class Account
 	{
 		private:
-		static int accounts;
-		static int accountMeter;
+		static int accounts; //how many accounts exist
+		static int accountMeter; //helps generate the account number
 		double balance;
 
 		void GenerateAccountNumber()
@@ -25,6 +25,7 @@ namespace LZ
 			{
 				id = "0" + id;
 			}
+			//id = std::string(6-id.length(),'0') + id;
 			accountNumber = type_branch + id;
 		}
 
@@ -32,13 +33,17 @@ namespace LZ
 		std::string accountNumber;
 
 		public:
-		Account() : Account(100) {} 
+		Account() : Account(50) 
+		{
+			std::cout << "Account Default Constructor Called\n";
+		} 
 		
 		Account(double balance)
 		{
-			this->balance = (balance < 100)?(100):(balance);
+			this->balance = (balance < 50)?(50):(balance);
 			GenerateAccountNumber();
 			accounts += 1;
+			std::cout << "Account Overloaded Constructor Called\n";
 		}
 
 		Account(const Account& obj)
@@ -46,6 +51,7 @@ namespace LZ
 			balance = obj.balance;
 			GenerateAccountNumber();
 			accounts += 1;
+			std::cout << "Account Copy Constructor Called\n";
 		}
 
 		Account& operator=(const Account& rhs)
@@ -60,6 +66,7 @@ namespace LZ
 		~Account() 
 		{
 			accounts -= 1;
+			std::cout << "Account Destructor Called\n";
 		}
 
 		double GetBalance() const 
